@@ -59,14 +59,12 @@ app.get('/people', async (req, res) => {
         res.json({error: 'something went wrong- check console'})
     }
 })
-
 //Non async awaits, what we learned previously
 // app.get('/people', (req, res) => {
 //     People.find({}, (err, people) => {
 //         res.send(people)
 //     })
 // })
-
 
 //CREATE
 app.post('/people', async (req, res) =>{
@@ -92,7 +90,6 @@ app.put('/people/:id', async(req, res) => {
     }
 })
 
-
 //DELETE
 app.delete('/people/:id', async (req, res) => {
     try {
@@ -101,20 +98,6 @@ app.delete('/people/:id', async (req, res) => {
         
     }
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //Tell Express to listen
 app.listen(PORT, () => {
