@@ -47,11 +47,16 @@ app.get('/', (req, res) => {
 //INDEX
 app.get('/people', async (req, res) => {
     try{
-        const people = await People.find({});
-        res.send(people)
+        //gets information from the data base
+        // const people = await People.find({});
+        //sends information to the user
+        // res.send(people);
+
+        //Another way to do it on one line
+        res.json(await People.find({}))
     } catch (error){
         console.log('error:', error);
-        res.send({error: 'something went wrong- check console'})
+        res.json({error: 'something went wrong- check console'})
     }
 })
 
@@ -63,10 +68,15 @@ app.get('/people', async (req, res) => {
 // })
 
 
-
-
-
 //CREATE
+app.post('/people', async (req, res) =>{
+    try {
+       res.json(await People.create(req.body));
+    } catch (error) {
+        console.log('error:' , error);
+        res.json({error: 'something happened- check the console'});
+    }
+})
 
 //UPDATE
 
