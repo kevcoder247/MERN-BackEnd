@@ -37,8 +37,6 @@ app.use(express.json())//this  creates req.body from incoming JSON
 //only when wxpress is serving html
  //app.use(express.urlencoded({extended: false}))
 
-
-
 //Mount Routes=============================================>
 app.get('/', (req, res) => {
     res.send('hello World')
