@@ -79,8 +79,28 @@ app.post('/people', async (req, res) =>{
 })
 
 //UPDATE
+app.put('/people/:id', async(req, res) => {
+    try {
+       res.json(await People.findByIdAndUpdate(
+       req.params.id, 
+       req.body, 
+       {new: true}
+       )); 
+    } catch (error) {
+       console.log('error', error);
+       res.json({error: 'Something went wron in - check console'}); 
+    }
+})
+
 
 //DELETE
+app.delete('/people/:id', async (req, res) => {
+    try {
+        res.json(await People.findByIdAndDelete(req.params.id));
+    } catch (error) {
+        
+    }
+})
 
 
 
