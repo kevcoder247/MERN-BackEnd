@@ -1,6 +1,8 @@
 //Dependencies
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors')
+const morgan = require('morgan');
 
 //Initialize the Express App 
 const app = express();
@@ -16,14 +18,73 @@ mongoose.connect(MONGODB_URL);
 //Mongo Status listeners
 const db = mongoose.connection
 db.on('connected', () => console.log('Connected ot MongoDb'));
-db.on('Error',  (err) => console.log('Error with MongoDb: ' + err.message))
+db.on('Error',  (err) => console.log('Error with MongoDb: ' + err.message));
+
+
+//Set up our model
+const peopleSchema = new mongoose.Schema({
+    name: String,
+    image: String,
+    title: String
+}, {timestamps: true});
+
+const People = mongoose.model('People', peopleSchema)
 
 //Mount MiddleWare
+app.use(cors()); //Access-Control-Allow
+app.use(morgan('dev'));
+app.use(express.json())//this  creates req.body from incoming JSON
+//only when wxpress is serving html
+ //app.use(express.urlencoded({extended: false}))
 
-//Mount Routes
+
+
+//Mount Routes=============================================>
 app.get('/', (req, res) => {
     res.send('hello World')
 })
+
+//INDEX
+app.get('/people', async (req, res) => {
+    try{
+        const people = await People.find({});
+        res.send(people)
+    } catch (error){
+        console.log('error:', error);
+        res.send({error: 'something went wrong- check console'})
+    }
+})
+
+//Non async awaits, what we learned previously
+// app.get('/people', (req, res) => {
+//     People.find({}, (err, people) => {
+//         res.send(people)
+//     })
+// })
+
+
+
+
+
+//CREATE
+
+//UPDATE
+
+//DELETE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //Tell Express to listen
 app.listen(PORT, () => {
